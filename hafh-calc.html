@@ -89,17 +89,21 @@
       <div class="highlight">📉 為官網價格的 <b>${discountB} 折</b></div>
       </div>`;
       // 方案C
-      let minC = getMinCostPackage(hcEachB);
+      // 舊會員全額加購 375 Ⓗ（兩組指定代幣 200 Ⓗ）
+      let oldCostC = 2880;
+      // 朋友需 375 Ⓗ，帳號有 300 Ⓗ，差額 75 Ⓗ
+      let friendDiffC = hcEachB - 300;
+      let minC = friendDiffC > 0 ? getMinCostPackage(friendDiffC) : { packMap: {}, total: 0 };
       let itemsC = Object.entries(minC.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
         { "新手包 100 Ⓗ": 720, "新手包 300 Ⓗ": 2040, "新手包 600 Ⓗ": 3840, "指定代幣組合 200 Ⓗ": 1440 }[k] * v
       )}）`).join('＋');
-      let totalC = 2880 + 439 + minC.total;
+      let totalC = oldCostC + 439 + minC.total;
       let discountC = Math.round((totalC / officialPrice) * 100);
       html += `<div class="result"><h2>方案 C｜老會員邀請朋友一起住</h2>
       <ul>
-        <li>老會員與朋友各需 ${hcEachB} Ⓗ，老會員全額加購（指定代幣組合兩組 200 Ⓗ，${formatCurrency(2880)}）</li>
+        <li>舊會員與朋友各需 ${hcEachB} Ⓗ，舊會員全額加購（指定代幣組合兩組 200 Ⓗ，${formatCurrency(2880)}）</li>
         <li>朋友首次加入月費：${formatCurrency(439)}</li>
-        <li>朋友加購代幣組合：${itemsC}</li>
+        ${friendDiffC > 0 ? `<li>朋友加購代幣組合：${itemsC}</li>` : ''}
       </ul>
       <div class="cost">總成本：約 ${formatCurrency(totalC)}</div>
       <div class="highlight">📉 為官網價格的 <b>${discountC} 折</b></div>
