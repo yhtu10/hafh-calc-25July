@@ -9,6 +9,9 @@
     label { display: block; margin-top: 10px; }
     input { margin-bottom: 10px; padding: 5px; width: 200px; }
     button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    .intro { margin: 18px 0 26px 0; color: #444; }
+    .pack-info { background: #fff; padding: 16px; border-radius: 6px; margin: 10px 0 28px 0; line-height: 1.6; font-size: 15px;}
+    .pack-info strong { color: #1a73e8; }
     .result { margin-top: 28px; background: #fff; padding: 22px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.08); }
     .footer { font-size: 0.96em; color: #666; margin-top: 36px; line-height: 1.7; }
     .highlight { color: #1a73e8; font-weight: bold; }
@@ -16,13 +19,15 @@
     ul { margin: 0 0 10px 0; padding-left: 22px; }
   </style>
   <script>
+    // 新手包與指定代幣組合
+    const packs = [
+      { label: "新手包 100 Ⓗ", hc: 100, cost: 720, type: "starter" },
+      { label: "新手包 300 Ⓗ", hc: 300, cost: 2040, type: "starter" },
+      { label: "新手包 600 Ⓗ", hc: 600, cost: 3840, type: "starter" },
+      { label: "指定代幣組合 200 Ⓗ", hc: 200, cost: 1440, type: "extra" }
+    ];
     function getMinCostPackage(diff) {
-      const packs = [
-        { label: "新手包 100 Ⓗ", hc: 100, cost: 720, type: "starter" },
-        { label: "新手包 300 Ⓗ", hc: 300, cost: 2040, type: "starter" },
-        { label: "新手包 600 Ⓗ", hc: 600, cost: 3840, type: "starter" },
-        { label: "指定代幣組合 200 Ⓗ", hc: 200, cost: 1440, type: "extra" }
-      ];
+      // 新手包只能各買一次、指定組合可無限買
       let best = null;
       function search(remain, combo, bought, total) {
         if (remain <= 0) {
@@ -46,20 +51,62 @@
     function formatCurrency(num) {
       return "NT$" + num.toLocaleString();
     }
+    function getDiscount(cost, price) {
+      let fold = Math.round((cost / price) * 10) / 10; // 0.6 -> 6 折
+      if (fold < 0.1) fold = 0.1;
+      return `約為官網價格 ${fold} 折`;
+    }
     function showResult() {
       const hafhHC = parseInt(document.getElementById("hafhHC").value);
       const officialPrice = parseInt(document.getElementById("officialPrice").value);
       const output = document.getElementById("output");
       output.innerHTML = "";
-      let html = "";
-      // 方案A
+
+      // 方案A：新會員單人入住
       let hcNeededA = hafhHC, hcStartA = 300, hcDiffA = hcNeededA - hcStartA;
       let minA = hcDiffA > 0 ? getMinCostPackage(hcDiffA) : { packMap: {}, total: 0 };
       let itemsA = Object.entries(minA.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
-        { "新手包 100 Ⓗ": 720, "新手包 300 Ⓗ": 2040, "新手包 600 Ⓗ": 3840, "指定代幣組合 200 Ⓗ": 1440 }[k] * v
+        packs.find(p=>p.label===k).cost * v
       )}）`).join('＋');
       let totalA = 439 + minA.total;
-      let discountA = Math.round((totalA / officialPrice) * 100);
+      let discountA = getDiscount(totalA, officialPrice);
+
+      // 方案B：新會員雙人入住分攤
+      let hcEachB = Math.ceil(hafhHC / 2);
+      let hcDiffB = hcEachB - 300;
+      let minB = hcDiffB > 0 ? getMinCostPackage(hcDiffB) : { packMap: {}, total: 0 };
+      let itemsB = Object.entries(minB.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
+        packs.find(p=>p.label===k).cost * v
+      )}）`).join('＋');
+      let totalEachB = 439 + minB.total;
+      let totalCostB = totalEachB * 2;
+      let discountB = getDiscount(totalCostB, officialPrice);
+
+      // 方案C：舊會員邀請朋友一起住
+      // 舊會員端需加購，需 cover 分攤後 Ⓗ 數（用指定組合算出足夠組數）
+      let hcEachC = hcEachB; // 舊會員與朋友各需
+      let oldNeed = hcEachC;
+      let oldBuy = Math.ceil(oldNeed / 200); // 幾組 200 Ⓗ
+      let oldCostC = oldBuy * 1440;
+
+      // 朋友需補差額
+      let friendDiffC = hcEachC - 300;
+      let minC = friendDiffC > 0 ? getMinCostPackage(friendDiffC) : { packMap: {}, total: 0 };
+      let itemsC = Object.entries(minC.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
+        packs.find(p=>p.label===k).cost * v
+      )}）`).join('＋');
+      let totalC = oldCostC + 439 + minC.total;
+      let discountC = getDiscount(totalC, officialPrice);
+
+      // 顯示新手包組合
+      let packInfo = `<div class="pack-info">
+        <strong>HafH 新手包與指定代幣組合價格：</strong><br>
+        新手包：100 Ⓗ＝NT$720、300 Ⓗ＝NT$2,040、600 Ⓗ＝NT$3,840（各限購一次，僅限新會員首次註冊購買）<br>
+        指定代幣組合：200 Ⓗ＝NT$1,440（不限次數，僅限付費會員購買）
+      </div>`;
+
+      let html = packInfo;
+
       html += `<div class="result"><h2>方案 A｜新會員單人入住</h2>
       <ul>
         <li>帳號開局為 300 Ⓗ，實際需要 ${hcNeededA} Ⓗ，差額 ${hcDiffA > 0 ? hcDiffA : 0} Ⓗ</li>
@@ -67,18 +114,9 @@
         <li>首月會費：${formatCurrency(439)}</li>
       </ul>
       <div class="cost">總成本：約 ${formatCurrency(totalA)}</div>
-      <div class="highlight">📉 為官網價格的 <b>${discountA} 折</b></div>
+      <div class="highlight">📉 ${discountA}</div>
       </div>`;
-      // 方案B
-      let hcEachB = Math.ceil(hafhHC / 2);
-      let hcDiffB = hcEachB - 300;
-      let minB = hcDiffB > 0 ? getMinCostPackage(hcDiffB) : { packMap: {}, total: 0 };
-      let itemsB = Object.entries(minB.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
-        { "新手包 100 Ⓗ": 720, "新手包 300 Ⓗ": 2040, "新手包 600 Ⓗ": 3840, "指定代幣組合 200 Ⓗ": 1440 }[k] * v
-      )}）`).join('＋');
-      let totalEachB = 439 + minB.total;
-      let totalCostB = totalEachB * 2;
-      let discountB = Math.round((totalCostB / officialPrice) * 100);
+
       html += `<div class="result"><h2>方案 B｜新會員雙人入住分攤</h2>
       <ul>
         <li>房價 ${hafhHC} Ⓗ 拆半後每人需 ${hcEachB} Ⓗ，帳號開局 300 Ⓗ，差額 ${hcDiffB > 0 ? hcDiffB : 0} Ⓗ／人</li>
@@ -86,28 +124,19 @@
         <li>首月會費：${formatCurrency(439)}／人</li>
       </ul>
       <div class="cost">總成本：約 ${formatCurrency(totalCostB)}（${formatCurrency(totalEachB)}／人）</div>
-      <div class="highlight">📉 為官網價格的 <b>${discountB} 折</b></div>
+      <div class="highlight">📉 ${discountB}</div>
       </div>`;
-      // 方案C
-      // 舊會員全額加購 375 Ⓗ（兩組指定代幣 200 Ⓗ）
-      let oldCostC = 2880;
-      // 朋友需 375 Ⓗ，帳號有 300 Ⓗ，差額 75 Ⓗ
-      let friendDiffC = hcEachB - 300;
-      let minC = friendDiffC > 0 ? getMinCostPackage(friendDiffC) : { packMap: {}, total: 0 };
-      let itemsC = Object.entries(minC.packMap).map(([k, v]) => `${k} ×${v}（${formatCurrency(
-        { "新手包 100 Ⓗ": 720, "新手包 300 Ⓗ": 2040, "新手包 600 Ⓗ": 3840, "指定代幣組合 200 Ⓗ": 1440 }[k] * v
-      )}）`).join('＋');
-      let totalC = oldCostC + 439 + minC.total;
-      let discountC = Math.round((totalC / officialPrice) * 100);
-      html += `<div class="result"><h2>方案 C｜老會員邀請朋友一起住</h2>
+
+      html += `<div class="result"><h2>方案 C｜舊會員邀請朋友一起住</h2>
       <ul>
-        <li>舊會員與朋友各需 ${hcEachB} Ⓗ，舊會員全額加購（指定代幣組合兩組 200 Ⓗ，${formatCurrency(2880)}）</li>
+        <li>舊會員與朋友各需 ${hcEachC} Ⓗ，舊會員全額加購（指定代幣組合 200 Ⓗ ×${oldBuy}，${formatCurrency(oldCostC)}）</li>
         <li>朋友首次加入月費：${formatCurrency(439)}</li>
         ${friendDiffC > 0 ? `<li>朋友加購代幣組合：${itemsC}</li>` : ''}
       </ul>
       <div class="cost">總成本：約 ${formatCurrency(totalC)}</div>
-      <div class="highlight">📉 為官網價格的 <b>${discountC} 折</b></div>
+      <div class="highlight">📉 ${discountC}</div>
       </div>`;
+
       html += `<div class="footer"><strong>溫馨提醒：</strong><br>
         1. 此試算頁面為粗略估算，為求謹慎請自行依照邏輯再次試算一遍。<br>
         2. 付費加入當天為結算日，且為第一次扣款。到第三次扣款時帳號會升級為 Silver VIP，享有每筆訂房 95 折。<br>
@@ -119,9 +148,9 @@
 </head>
 <body>
   <h1>HafH 2025 首月 3 折活動計算機</h1>
-  <p>
+  <div class="intro">
     <b>提醒：</b>新會員預設帳戶有 300 Ⓗ，所有計算以此為前提。請填寫符合相同條件（日期、人數、取消規則）且為新台幣的金額。
-  </p>
+  </div>
   <label>HafH 所需 Ⓗ 數：</label>
   <input id="hafhHC" type="number" value="750">
   <label>官網價格（NT$）：</label>
