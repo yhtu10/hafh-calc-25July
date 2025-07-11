@@ -18,56 +18,52 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 40px;
+      padding-top: 34px;
     }
     h1 {
-      color: #222;
-      margin-bottom: 16px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-align: center;
+      color: #222; margin-bottom: 12px; font-weight: 700; letter-spacing: 1.5px; text-align: center;
     }
     .intro {
-      color: #444; text-align: center; margin-bottom: 20px; line-height: 1.7;
-      font-size: 1.07em;
+      color: #444; text-align: center; margin-bottom: 20px; line-height: 1.7; font-size: 1.05em;
+      max-width: 510px; margin-left: auto; margin-right: auto;
     }
+    .intro span { display: block; margin-top: 7px; }
     .input-group {
       display: flex; flex-direction: column; align-items: center;
-      margin-bottom: 18px; background: #fff;
+      margin-bottom: 20px; background: #fff;
       padding: 28px 32px 18px 32px; border-radius: 14px;
       box-shadow: 0 2px 16px 0 #eee;
-      min-width: 360px;
+      min-width: 320px;
     }
-    label {
-      margin-top: 8px; margin-bottom: 2px; font-weight: 600;
-    }
-    input {
+    label { margin-top: 8px; margin-bottom: 2px; font-weight: 600; }
+    input[type=number] {
       margin-bottom: 12px; padding: 7px 10px;
       width: 210px; border-radius: 5px; border: 1px solid #bdbdbd;
-      font-size: 1.06em; background: #f5f7fa;
-      transition: border-color .2s;
+      font-size: 1.06em; background: #f5f7fa; transition: border-color .2s;
     }
-    input:focus { border: 1.6px solid #1a73e8; outline: none; }
+    input[type=number]:focus { border: 1.6px solid #1a73e8; outline: none; }
+    input[placeholder]::placeholder { color:#bbb; }
     button {
-      padding: 12px 32px; background: #3caf48;
-      color: white; border: none; border-radius: 5px;
-      cursor: pointer; font-size: 17px; margin-top: 2px;
-      transition: background .18s;
-      font-weight: 500;
+      padding: 12px 32px; background: #3caf48; color: white; border: none; border-radius: 5px;
+      cursor: pointer; font-size: 17px; margin-top: 2px; transition: background .18s; font-weight: 500;
     }
     button:hover { background: #318837;}
     .pack-info {
-      background: #fff; padding: 18px 28px; border-radius: 10px;
-      margin: 18px 0 24px 0; line-height: 1.7; font-size: 15.5px;
-      width: 100%; max-width: 580px; text-align: left;
-      box-shadow: 0 2px 12px 0 #f1f3f6;
-      margin-bottom: 32px;
+      background: #fff; padding: 18px 32px 20px 32px; border-radius: 10px;
+      margin: 10px auto 24px auto; line-height: 1.7; font-size: 15.5px;
+      width: 100%; max-width: 530px; text-align: left; box-shadow: 0 2px 12px 0 #f1f3f6;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .pack-title {
+      font-size: 1.13em; color: #1b51a7; letter-spacing: 0.4px; font-weight: bold;
+      margin-bottom: 6px; text-align: center;
     }
     .pack-info-table {
-      display: flex; gap: 36px; flex-wrap: wrap; margin-top: 10px; align-items: flex-start;
+      display: flex; gap: 44px; flex-wrap: wrap; margin-top: 5px; align-items: flex-start; width:100%;
+      justify-content: center;
     }
     .pack-info-col {
-      flex:1 1 220px; min-width:180px;
+      flex:1 1 220px; min-width:170px;
     }
     .pack-info-col table {
       border-collapse: collapse; width: 100%; margin-top: 3px;
@@ -75,40 +71,46 @@
     .pack-info-col td {
       padding: 4px 10px 4px 0; font-size: 1.08em;
     }
-    .pack-info-col tr td:last-child {
-      text-align: right; color: #212121; font-weight: 500;
-    }
-    .pack-info-col .note {
-      font-size:0.95em; color:#a67c13; margin-top:2px; margin-bottom:5px;
-    }
-    .pack-info-col .note2 { color:#18833b;}
-    .pack-info-col .title1 { font-weight:700; margin-bottom:4px; color:#ed921b;}
-    .pack-info-col .title2 { font-weight:700; margin-bottom:4px; color:#18833b;}
+    .pack-info-col tr td:last-child { text-align: right; color: #222; font-weight: 500; }
+    .pack-info-col .note { font-size:0.94em; color:#c4940f; margin-top:2px; margin-bottom:5px; }
+    .pack-info-col .note2 { color:#178a3d; }
+    .pack-info-col .title1 { font-weight:700; margin-bottom:4px; color:#e39318;}
+    .pack-info-col .title2 { font-weight:700; margin-bottom:4px; color:#257722;}
     .result-list {
       width: 100%; display: flex; flex-direction: column; align-items: center;
       gap: 24px; margin: 0;
     }
     .result {
-      background: #fff;
-      padding: 32px 38px;
-      border-radius: 14px;
-      box-shadow: 0 2px 14px 0 #ebeff2;
-      width: 100%; max-width: 560px;
-      margin: 0 auto 0 auto;
-      text-align: left;
-      margin-bottom: 0;
+      background: #fff; padding: 32px 38px; border-radius: 14px; box-shadow: 0 2px 14px 0 #ebeff2;
+      width: 100%; max-width: 530px; margin: 0 auto 0 auto; text-align: left; margin-bottom: 0;
     }
-    .result h2 { margin: 0 0 15px 0; font-size: 1.23em; font-weight: 700; letter-spacing: 0.5px;}
-    .result ul { margin: 0 0 12px 0; padding-left: 21px; line-height: 1.85;}
+    .result h2 { margin: 0 0 13px 0; font-size: 1.17em; font-weight: 700; letter-spacing: 0.5px;}
+    .result ul { margin: 0 0 13px 0; padding-left: 21px; line-height: 1.87;}
     .combo-list { margin: 0 0 0 0; padding: 0; list-style: none; }
     .combo-list li { margin: 0 0 0 0; padding: 0 0 0 0; line-height: 1.7; }
-    .cost { color: #b71c1c; font-weight: bold; margin-top: 10px; font-size: 1.11em;}
-    .official { color: #444; font-size: 0.98em; margin-top: 2px;}
+    .cost-area {
+      margin-top: 13px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 1.1em;
+    }
+    .cost-label { color: #555; font-weight: 500; }
+    .cost-num {
+      font-size: 1.18em;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: bold;
+      color: #191919;
+      letter-spacing: 1px;
+      text-align: right;
+    }
+    .official-label { color: #787878; font-size:0.98em; font-weight: 400;}
+    .official-num { font-size:1.15em; color: #444; font-weight: bold; text-align: right; letter-spacing: 1px;}
     .compare { color: #1565c0; font-weight: bold; margin-top: 7px;}
     .footer {
-      font-size: 0.99em; color: #666; margin-top: 40px; line-height: 1.8;
+      font-size: 0.99em; color: #666; margin-top: 38px; line-height: 1.8;
       max-width: 600px; text-align: left; margin-left: auto; margin-right: auto;
-      background: #f7f7fb; border-radius: 10px; padding: 22px 32px;
+      background: #f7f7fb; border-radius: 10px; padding: 20px 28px 20px 28px;
       box-shadow: 0 1px 6px 0 #e9ebf0;
     }
     @media (max-width: 700px) {
@@ -120,12 +122,12 @@
       .result { padding: 22px 6vw;}
       .pack-info { padding: 12px 4vw; }
     }
-    @media (max-width: 440px) {
-      .result, .pack-info, .footer { padding: 10px 2vw;}
+    @media (max-width: 480px) {
+      .result, .pack-info, .footer { padding: 9px 1vw;}
+      .input-group { padding: 12px 2vw 10px 2vw;}
     }
   </style>
   <script>
-    // 代幣組合
     const packs = [
       { label: "新手包 100 Ⓗ", hc: 100, cost: 720, type: "starter" },
       { label: "新手包 300 Ⓗ", hc: 300, cost: 2040, type: "starter" },
@@ -183,13 +185,16 @@
         <div class="result">
         <h2>方案 A｜一人申辦新會員</h2>
         <ul>
-          <li>帳號開局為 300 Ⓗ，實際需要 ${hcNeededA} Ⓗ，差額 ${hcDiffA > 0 ? hcDiffA : 0} Ⓗ</li>
-          ${comboA.length ? `<li>加購代幣組合：</li>
-            <ul class="combo-list"><li>${comboA.join('<br>＋')}</li></ul>` : ""}
+          <li>帳號開局為 300 Ⓗ<br>實際需要 ${hcNeededA} Ⓗ<br>差額 ${hcDiffA > 0 ? hcDiffA : 0} Ⓗ</li>
+          ${comboA.length ? `<li>加購代幣組合：<br><ul class="combo-list"><li>${comboA.join('<br>＋')}</li></ul></li>` : ""}
           <li>首月會費：${formatCurrency(439)}</li>
         </ul>
-        <div class="cost">總成本：約 ${formatCurrency(totalA)}</div>
-        <div class="official">官網價格：${formatCurrency(officialPrice)}</div>
+        <div class="cost-area">
+          <div class="cost-label">總成本：</div>
+          <div class="cost-num">${formatCurrency(totalA)}</div>
+          <div class="official-label">官網價格：</div>
+          <div class="official-num">${formatCurrency(officialPrice)}</div>
+        </div>
         <div class="compare">${percentCompare(totalA, officialPrice)}</div>
         </div>
       `;
@@ -205,13 +210,16 @@
         <div class="result">
         <h2>方案 B｜兩人同時申辦新會員（分攤預訂）</h2>
         <ul>
-          <li>房價 ${hafhHC} Ⓗ 拆半後每人需 ${hcEachB} Ⓗ，帳號開局 300 Ⓗ，差額 ${hcDiffB > 0 ? hcDiffB : 0} Ⓗ／人</li>
-          ${comboB.length ? `<li>每人加購代幣組合：</li>
-            <ul class="combo-list"><li>${comboB.join('<br>＋')}</li></ul>` : ""}
+          <li>房價 ${hafhHC} Ⓗ<br>拆半後每人需 ${hcEachB} Ⓗ<br>帳號開局 300 Ⓗ<br>差額 ${hcDiffB > 0 ? hcDiffB : 0} Ⓗ／人</li>
+          ${comboB.length ? `<li>每人加購代幣組合：<br><ul class="combo-list"><li>${comboB.join('<br>＋')}</li></ul></li>` : ""}
           <li>首月會費：${formatCurrency(439)}／人</li>
         </ul>
-        <div class="cost">總成本：約 ${formatCurrency(totalCostB)}（${formatCurrency(totalEachB)}／人）</div>
-        <div class="official">官網價格：${formatCurrency(officialPrice)}</div>
+        <div class="cost-area">
+          <div class="cost-label">總成本：</div>
+          <div class="cost-num">${formatCurrency(totalCostB)}<span style="font-size:0.92em;">（${formatCurrency(totalEachB)}／人）</span></div>
+          <div class="official-label">官網價格：</div>
+          <div class="official-num">${formatCurrency(officialPrice)}</div>
+        </div>
         <div class="compare">${percentCompare(totalCostB, officialPrice)}</div>
         </div>
       `;
@@ -229,51 +237,21 @@
         <div class="result">
         <h2>方案 C｜舊會員邀請朋友一起住</h2>
         <ul>
-          <li>舊會員與朋友各需 ${hcEachC} Ⓗ，舊會員全額加購（指定代幣組合 200 Ⓗ ×${oldBuy}，${formatCurrency(oldCostC)}）</li>
+          <li>舊會員與朋友各需 ${hcEachC} Ⓗ<br>舊會員全額加購（指定代幣組合 200 Ⓗ ×${oldBuy}，${formatCurrency(oldCostC)}）</li>
           <li>朋友首次加入月費：${formatCurrency(439)}</li>
-          ${comboC.length ? `<li>朋友加購代幣組合：</li>
-            <ul class="combo-list"><li>${comboC.join('<br>＋')}</li></ul>` : ""}
+          ${comboC.length ? `<li>朋友加購代幣組合：<br><ul class="combo-list"><li>${comboC.join('<br>＋')}</li></ul></li>` : ""}
         </ul>
-        <div class="cost">總成本：約 ${formatCurrency(totalC)}</div>
-        <div class="official">官網價格：${formatCurrency(officialPrice)}</div>
+        <div class="cost-area">
+          <div class="cost-label">總成本：</div>
+          <div class="cost-num">${formatCurrency(totalC)}</div>
+          <div class="official-label">官網價格：</div>
+          <div class="official-num">${formatCurrency(officialPrice)}</div>
+        </div>
         <div class="compare">${percentCompare(totalC, officialPrice)}</div>
         </div>
       `;
 
-      // 新手包說明（新版）
-      let packInfo = `<div class="pack-info">
-        <strong style="font-size:1.12em; color:#2152d9; letter-spacing:0.5px;">
-          HafH 代幣購買說明
-        </strong>
-        <div class="pack-info-table">
-          <div class="pack-info-col">
-            <div class="title1">
-              🎁 新手包
-              <span style="font-size:0.97em; font-weight:400;">（限新會員首次註冊，各組限購 1 次）</span>
-            </div>
-            <table>
-              <tr><td>100 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$720</td></tr>
-              <tr><td>300 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$2,040</td></tr>
-              <tr><td>600 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$3,840</td></tr>
-            </table>
-            <div class="note">註：新手包僅在新會員註冊時可購買，各組限購一次。</div>
-          </div>
-          <div class="pack-info-col">
-            <div class="title2">
-              🔄 指定代幣組合
-              <span style="font-size:0.97em; font-weight:400;">（不限次數，付費會員皆可購買）</span>
-            </div>
-            <table>
-              <tr><td>200 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$1,440</td></tr>
-            </table>
-            <div class="note note2">註：指定代幣組合購買無上限，會員期間隨時可購買。</div>
-          </div>
-        </div>
-      </div>`;
-
-      // 輸出
       output.innerHTML =
-        packInfo +
         `<div class="result-list">${htmlA + htmlB + htmlC}</div>
         <div class="footer">
         <strong>溫馨提醒：</strong><br>
@@ -288,16 +266,22 @@
   <div class="container">
     <h1>HafH 2025 首月 3 折活動計算機</h1>
     <div class="intro">
-      <b>提醒：</b>新會員預設帳戶有 300 Ⓗ，所有計算以此為前提。請填寫符合相同條件（日期、人數、取消規則）且為新台幣的金額。
+      <span><b>提醒：</b>新會員預設帳戶有 300 Ⓗ，所有計算以此為前提。</span>
+      <span>請填寫符合相同條件（日期、人數、取消規則）<br>且為新台幣的金額。</span>
     </div>
-    <div class="input-group">
-      <label>HafH 所需 Ⓗ 數：</label>
-      <input id="hafhHC" type="number" value="750">
-      <label>官網價格（NT$）：</label>
-      <input id="officialPrice" type="number" value="4400">
-      <button onclick="showResult()">計算</button>
-    </div>
-    <div id="output" style="width:100%"></div>
-  </div>
-</body>
-</html>
+    <div class="pack-info">
+      <div class="pack-title">HafH 7/28 前活動優惠方案</div>
+      <div class="pack-info-table">
+        <div class="pack-info-col">
+          <div class="title1">🎁 新手包 <span style="font-size:0.97em; font-weight:400;">（限新會員首次註冊，各組限購 1 次）</span></div>
+          <table>
+            <tr><td>100 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$720</td></tr>
+            <tr><td>300 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$2,040</td></tr>
+            <tr><td>600 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$3,840</td></tr>
+          </table>
+          <div class="note">新手包僅在新會員註冊時可購買，各組限購一次。</div>
+        </div>
+        <div class="pack-info-col">
+          <div class="title2">🔄 指定代幣組合 <span style="font-size:0.97em; font-weight:400;">（不限次數，付費會員皆可購買）</span></div>
+          <table>
+            <tr><td>200 <span styl
