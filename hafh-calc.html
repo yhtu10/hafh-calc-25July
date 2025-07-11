@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HafH 活動方案比價試算器</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    input, select { width: 100%; padding: 8px; margin: 8px 0; }
+    .result { margin-top: 24px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <h2>HafH 住宿比價試算器</h2>
+  <p>請先輸入下列資料：</p>
+
+  <label>幾人入住：</label>
+  <select id="people">
+    <option value="1">1 人</option>
+    <option value="2">2 人</option>
+  </select>
+
+  <label>是否為新會員：</label>
+  <select id="isNew">
+    <option value="yes">是</option>
+    <option value="no">否</option>
+  </select>
+
+  <label>是否使用邀請碼：</label>
+  <select id="hasCode">
+    <option value="yes">是</option>
+    <option value="no">否</option>
+  </select>
+
+  <label>官網價格（請輸入台幣或日幣整數）：</label>
+  <input type="number" id="officialPrice" placeholder="例如：39425">
+
+  <label>HafH 住宿所需 HC 數量：</label>
+  <input type="number" id="hafhCoins" placeholder="例如：960">
+
+  <button onclick="calculate()">立即試算</button>
+
+  <div class="result" id="resultBox" style="display:none"></div>
+
+  <script>
+    function calculate() {
+      const people = parseInt(document.getElementById('people').value);
+      const isNew = document.getElementById('isNew').value === 'yes';
+      const hasCode = document.getElementById('hasCode').value === 'yes';
+      const officialPrice = parseInt(document.getElementById('officialPrice').value);
+      const hafhCoins = parseInt(document.getElementById('hafhCoins').value);
+      const coinToNT = 7.25;
+      let result = '';
+
+      if (isNaN(officialPrice) || isNaN(hafhCoins)) {
+        alert('請完整填寫所有欄位');
+        return;
+      }
+
+      let coinNeededA = hafhCoins;
+      let costA = 439;
+      if (coinNeededA > 300) {
+        let extraCoins = coinNeededA - 300;
+        if (extraCoins <= 100) costA += 720;
+        else if (extraCoins <= 600) costA += 3840;
+        else costA += 720 + 3840;
+      }
+
+      let halfCoins = Math.ceil(hafhCoins / 2);
+      let costB = 439 + 1440;
+      let costB_total = costB * 2;
+
+      let costC_friend = 439 + 1440;
+      let costC_you = Math.ceil(hafhCoins / 2 * coinToNT);
+      let inviteBonus = hasCode ? 200 * coinToNT : 0;
+      let costC_total = costC_you + costC_friend - inviteBonus;
+
+      result += `<h3>方案 A｜新會員單人入住</h3>`;
+      result += `總成本：約 NT$${Math.round(costA)}<br>`;
+      result += `相對官網節省：約 ${Math.round(100 - costA / officialPrice * 100)}%<hr>`;
+
+      result += `<h3>方案 B｜新會員雙人入住分攤</h3>`;
+      result += `總成本：約 NT$${Math.round(costB_total)}（兩人）<br>`;
+      result += `相對官網節省：約 ${Math.round(100 - costB_total / officialPrice * 100)}%<hr>`;
+
+      result += `<h3>方案 C｜老會員邀請朋友一起住</h3>`;
+      result += `總成本：約 NT$${Math.round(costC_total)}<br>`;
+      result += `相對官網節省：約 ${Math.round(100 - costC_total / officialPrice * 100)}%<hr>`;
+
+      result += `<p>👉 建議：根據目前條件，「方案 ${bestOption(costA, costB_total, costC_total)}」最划算！</p>`;
+      result += `<p>📌 馬上使用 HafH 註冊：<a href="https://www.hafh.com/invite?code=TW30RC" target="_blank">點我使用邀請碼</a></p>`;
+
+      document.getElementById('resultBox').innerHTML = result;
+      document.getElementById('resultBox').style.display = 'block';
+    }
+
+    function bestOption(a, b, c) {
+      let min = Math.min(a, b, c);
+      if (min === a) return 'A';
+      if (min === b) return 'B';
+      return 'C';
+    }
+  </script>
+</body>
+</html>
