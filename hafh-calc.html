@@ -41,6 +41,18 @@
 
   <button onclick="calculate()">立即試算</button>
 
+  
+  <div class="result" style="margin-top:24px; padding:16px; background:#f0f0f0;">
+    <h4>📌 HafH 可購買代幣方案說明</h4>
+    <p>🎁 <strong>新手包組合</strong>（僅限首次註冊購買，每組限購一次）：<br>
+      ・100 Ⓗ → NT$720<br>
+      ・300 Ⓗ → NT$2,040<br>
+      ・600 Ⓗ → NT$3,840</p>
+    <p>💼 <strong>指定代幣組合</strong>（限現有付費會員）：<br>
+      ・200 Ⓗ（九折）→ NT$1,440<br>
+      ※ 可重複購買</p>
+  </div>
+
   <div class="result" id="resultBox" style="display:none"></div>
 
   <script>
@@ -77,11 +89,27 @@
       let inviteBonus = hasCode ? 200 * coinToNT : 0;
       let costC_total = costC_you + costC_friend - inviteBonus;
 
-      result += `<h3>方案 A｜新會員單人入住</h3>`;
+      result += `<div class="result" style="padding:12px; background:#f0f0f0;"><strong>📌 HafH 可購買代幣方案說明</strong><br>🎁 新手包組合：100 Ⓗ＝NT$720、300 Ⓗ＝NT$2,040、600 Ⓗ＝NT$3,840<br>💼 指定代幣組合：200 Ⓗ（九折）＝NT$1,440</div>`;
+result += `<h3>方案 A｜新會員單人入住</h3>`;
+      result += `💡 如果你是新會員，只想自己訂房使用 HafH<br>`;
+      result += `- Ⓗ 房價為 ${hafhCoins} Ⓗ<br>`;
+      result += `- 使用邀請碼註冊，帳號中會有 300 Ⓗ（首月付費會員）<br>`;
+      result += `- 還需要補 ${hafhCoins - 300} Ⓗ 才能入住<br>`;
+      result += `- 你可以直接購買 Ⓗ200 指定代幣組合（NT$1,440）來補足<br>`;
+      result += `- 實際會用掉 ${hafhCoins - 300} Ⓗ，剩下 ${(200 - (hafhCoins - 300))} Ⓗ 可留未來使用<br>`;
+      result += `- 首月會費 NT$439 + 指定代幣組合 NT$1,440 = <strong>NT$1,879</strong><br>`;
+      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 1879 / officialPrice)}%</strong> 價格<hr>`;
       result += `總成本：約 NT$${Math.round(costA)}<br>`;
       result += `相對官網節省：約 ${Math.round(100 - costA / officialPrice * 100)}%<hr>`;
 
       result += `<h3>方案 B｜新會員雙人入住分攤</h3>`;
+      result += `💡 如果你和朋友都是新會員，可以一起訂房並使用「分攤預訂」功能<br>`;
+      result += `- Ⓗ 房價拆半所以每人需 ${halfCoins} Ⓗ<br>`;
+      result += `- 使用邀請碼註冊後帳號會有 300 Ⓗ<br>`;
+      result += `- 帳號內 300 Ⓗ 足夠支付，不需要補買新手包或指定代幣<br>`;
+      result += `- 成本僅為首月會費 NT$439 × 2<br>`;
+      result += `- <strong>總成本：NT$878</strong><br>`;
+      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 878 / officialPrice)}%</strong> 價格<hr>`;
       result += `💡 適合兩位新會員一起訂房並使用分攤功能<br>`;
       result += `- 每人需 ${halfCoins} Ⓗ，註冊送 300 Ⓗ → 每人補 200 Ⓗ<br>`;
       result += `- 補買 200 Ⓗ 指定代幣組合：NT$1440（每人）<br>`;
@@ -90,6 +118,15 @@
       result += `📉 節省：約 ${Math.round(100 - costB_total / officialPrice * 100)}% 相較官網 NT$${officialPrice}<hr>`;
 
       result += `<h3>方案 C｜老會員邀請朋友一起住</h3>`;
+      result += `💡 如果你已經是 HafH 的付費會員，可以邀請朋友一起訂房並使用「分攤預訂」功能<br>`;
+      result += `- Ⓗ 房價為 ${hafhCoins} Ⓗ，分攤後你與朋友各需 ${halfCoins} Ⓗ<br>`;
+      result += `- 假設你帳號餘額為 0，需補 ${halfCoins} Ⓗ<br>`;
+      result += `- 可購買兩組 Ⓗ200 指定代幣組合（NT$1,440 × 2 = NT$2,880）<br>`;
+      result += `- 朋友註冊後帳號內會有 300 Ⓗ，足夠支付，不需額外購買<br>`;
+      result += `- 朋友僅需支付首月會費 NT$439<br>`;
+      result += `- 你可獲得邀請回饋 200 Ⓗ（價值約 NT$1,450，可留作下次使用）<br>`;
+      result += `- <strong>總成本：約 NT$3,319</strong>（你付 NT$2,880，朋友 NT$439）<br>`;
+      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 3319 / officialPrice)}%</strong> 價格<hr>`;
       result += `總成本：約 NT$${Math.round(costC_total)}<br>`;
       result += `相對官網節省：約 ${Math.round(100 - costC_total / officialPrice * 100)}%<hr>`;
 
@@ -98,6 +135,16 @@
 
       document.getElementById('resultBox').innerHTML = result;
       document.getElementById('resultBox').style.display = 'block';
+
+result += `<div class="result" style="padding:16px; background:#fff8e1; border:1px solid #ffe082; margin-top:24px;">
+  <h4>📌 溫馨提醒</h4>
+  <ol>
+    <li>此試算頁面為粗略估算，為求謹慎請自行依照邏輯再次試算一遍。</li>
+    <li>付費加入當天為結算日，且為第一次扣款日；到第三次扣款時會升級為 Silver VIP，可享每筆訂房 95 折。</li>
+    <li>有預約的狀況下無法變更為休眠會籍，若預約日尚未到且期間會經過結算日，系統會照常扣款並發放 200 Ⓗ。</li>
+  </ol>
+</div>`;
+
     }
 
     function bestOption(a, b, c) {
