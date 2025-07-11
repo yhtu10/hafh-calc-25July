@@ -311,7 +311,7 @@
         totalCostA += purchaseA.reduce((sum, p) => sum + p.price * p.count, 0);
       }
       let percentA = totalCostA / officialPrice;
-      let percentStrA = "與您提供的官網價格相比約為 " + formatPercent(percentA) + "（約為官網價格 " + formatFold(percentA) + "）";
+      let percentStrA = "與您提供的官網價格相比約為 " + formatPercent(percentA)";
 
       // 方案 B：兩人同時申辦新會員
       let perPerson = Math.ceil(hafhHC/2);
@@ -326,7 +326,7 @@
         totalCostB += purchaseB.reduce((sum, p) => sum + p.price * p.count, 0) * 2;
       }
       let percentB = totalCostB / officialPrice;
-      let percentStrB = "與您提供的官網價格相比約為 " + formatPercent(percentB) + "（約為官網價格 " + formatFold(percentB) + "）";
+      let percentStrB = "與您提供的官網價格相比約為 " + formatPercent(percentB)";
 
       // 方案 C：舊會員邀請朋友一起住
       let diffC1 = perPerson;
@@ -337,7 +337,7 @@
       ).join("<br>");
       let totalCostC = totalCostC1 + 439;
       let percentC = totalCostC / officialPrice;
-      let percentStrC = "與您提供的官網價格相比約為 " + formatPercent(percentC) + "（約為官網價格 " + formatFold(percentC) + "）";
+      let percentStrC = "與您提供的官網價格相比約為 " + formatPercent(percentC)";
 
       // 組裝區塊
       let html = '';
@@ -353,7 +353,7 @@
           <div class="result-sum-txt">
             <div class="result-label">總成本：</div>
             <div class="result-cost">${format(totalCostA)}</div>
-            <div class="result-label">官網價格：</div>
+            <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
           <div class="summary-note">${percentStrA}</div>
@@ -372,7 +372,7 @@
           <div class="result-sum-txt">
             <div class="result-label">總成本：</div>
             <div class="result-cost">${format(totalCostB)}</div>
-            <div class="result-label">官網價格：</div>
+            <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
           <div class="summary-note">${percentStrB}</div>
@@ -390,7 +390,7 @@
           <div class="result-sum-txt">
             <div class="result-label">總成本：</div>
             <div class="result-cost">${format(totalCostC)}</div>
-            <div class="result-label">官網價格：</div>
+            <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
           <div class="summary-note">${percentStrC}</div>
