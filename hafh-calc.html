@@ -36,7 +36,7 @@
   <label>官網價格（請輸入台幣或日幣整數）：</label>
   <input type="number" id="officialPrice" placeholder="例如：39425">
 
-  <label>HafH 住宿所需 HC 數量：</label>
+  <label>需要 Ⓗ 數量：</label>
   <input type="number" id="hafhCoins" placeholder="例如：960">
 
   <button onclick="calculate()">立即試算</button>
@@ -63,8 +63,9 @@
       if (coinNeededA > 300) {
         let extraCoins = coinNeededA - 300;
         if (extraCoins <= 100) costA += 720;
+        else if (extraCoins <= 300) costA += 2040;
         else if (extraCoins <= 600) costA += 3840;
-        else costA += 720 + 3840;
+        else costA += 3840 + 1440;
       }
 
       let halfCoins = Math.ceil(hafhCoins / 2);
@@ -81,8 +82,12 @@
       result += `相對官網節省：約 ${Math.round(100 - costA / officialPrice * 100)}%<hr>`;
 
       result += `<h3>方案 B｜新會員雙人入住分攤</h3>`;
-      result += `總成本：約 NT$${Math.round(costB_total)}（兩人）<br>`;
-      result += `相對官網節省：約 ${Math.round(100 - costB_total / officialPrice * 100)}%<hr>`;
+      result += `💡 適合兩位新會員一起訂房並使用分攤功能<br>`;
+      result += `- 每人需 ${halfCoins} Ⓗ，註冊送 300 Ⓗ → 每人補 200 Ⓗ<br>`;
+      result += `- 補買 200 Ⓗ 指定代幣組合：NT$1440（每人）<br>`;
+      result += `- 首月會費：NT$439（每人）<br>`;
+      result += `✅ 兩人總成本：約 NT$${Math.round(costB_total)}<br>`;
+      result += `📉 節省：約 ${Math.round(100 - costB_total / officialPrice * 100)}% 相較官網 NT$${officialPrice}<hr>`;
 
       result += `<h3>方案 C｜老會員邀請朋友一起住</h3>`;
       result += `總成本：約 NT$${Math.round(costC_total)}<br>`;
