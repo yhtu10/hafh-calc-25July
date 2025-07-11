@@ -6,102 +6,88 @@
   <title>HafH Taiwan 2025 首月 3 折活動計算機</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html, body { background: #fafafa; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans TC', 'Segoe UI', Arial, 'Microsoft JhengHei', sans-serif;
+      background: #fafafa;
       color: #232323;
       margin: 0;
-      padding: 0;
     }
     .main {
       max-width: 480px;
       margin: 0 auto;
-      padding: 18px 0 34px 0;
+      padding: 32px 0 40px 0;
     }
-    .h1-wrap {
-      margin-bottom: 6px;
-    }
-    .main-title {
-      font-size: 1.45em;
+    h1 {
+      font-size: 2em;
       font-weight: 700;
-      text-align: center;
-      margin: 15px 0 2px 0;
+      margin: 16px 0 8px 0;
       letter-spacing: 1px;
-      line-height: 1.3;
-    }
-    .main-title2 {
-      font-size: 1.45em;
-      font-weight: 700;
       text-align: center;
-      margin: 2px 0 12px 0;
-      letter-spacing: 1px;
-      line-height: 1.3;
+      line-height: 1.15;
     }
-    .notice-block {
-      background: #fff8e1;
-      border-radius: 10px;
-      border: 1.5px solid #f7ca6b;
-      max-width: 430px;
-      margin: 0 auto 20px auto;
-      padding: 14px 17px 13px 17px;
-      font-size: 0.99em;
-      color: #444;
+    .subtitle {
+      font-size: 0.95em;
+      color: #333;
+      margin: 0 auto 14px auto;
       text-align: left;
-      line-height: 1.6;
+      font-weight: 400;
+      line-height: 1.7;
+      background: #f4f7fc;
+      border-radius: 10px;
+      padding: 15px 18px 15px 16px;
+      max-width: 430px;
+      box-sizing: border-box;
     }
     .info-block {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 18px;
       box-shadow: 0 2px 12px #0001;
-      max-width: 430px;
-      margin: 0 auto 16px auto;
-      padding: 16px 0 8px 0;
+      max-width: 420px;
+      margin: 22px auto 18px auto;
+      padding: 20px 0 18px 0;
       line-height: 1.65;
     }
     .info-section {
       padding: 0 22px 0 22px;
-      margin-bottom: 9px;
+      margin-bottom: 12px;
     }
     .info-title {
-      font-size: 1.09em;
+      font-size: 1.10em;
+      margin-bottom: 4px;
       font-weight: 700;
-      margin-bottom: 0;
       letter-spacing: 0.5px;
-      color: #252c45;
     }
     .info-sub {
       font-size: 0.96em;
       color: #b47b00;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       font-weight: 400;
-      line-height: 1.4;
     }
     .info-green {
-      color: #20aa82;
-      font-size: 0.97em;
-      font-weight: 500;
+      color: #237a20;
+      font-size: 0.96em;
       margin-bottom: 2px;
+      font-weight: 400;
     }
     .info-table {
       font-size: 1em;
       margin-bottom: 2px;
       letter-spacing: 0.2px;
-      font-family: 'Noto Sans TC', Arial, 'Microsoft JhengHei', sans-serif;
     }
     .info-note {
-      font-size: 0.96em;
+      font-size: 0.95em;
       color: #b47b00;
       margin-bottom: 3px;
     }
     .info-note2 {
-      font-size: 0.96em;
+      font-size: 0.95em;
       color: #237a20;
       margin-bottom: 3px;
     }
     .input-card {
       background: #fff;
-      margin: 20px auto 15px auto;
-      padding: 20px 18px 16px 18px;
+      margin: 20px auto 18px auto;
+      padding: 22px 24px 18px 24px;
       max-width: 370px;
       border-radius: 16px;
       box-shadow: 0 3px 24px #0001;
@@ -111,18 +97,18 @@
       font-size: 1.04em;
       font-weight: 500;
       margin-bottom: 1px;
-      margin-top: 13px;
+      margin-top: 15px;
       display: block;
     }
     .input-card input[type="number"] {
-      width: 98%;
+      width: 96%;
       font-size: 1em;
-      padding: 8px 8px;
+      padding: 7px 8px;
       border: 1px solid #bbb;
       border-radius: 8px;
       outline: none;
       background: #f6f6f6;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
       color: #333;
       box-sizing: border-box;
     }
@@ -141,13 +127,13 @@
       font-weight: 700;
       padding: 10px 0;
       width: 100%;
-      margin-top: 13px;
+      margin-top: 16px;
       cursor: pointer;
       transition: background .16s;
     }
     .input-card button:hover { background: #12984c; }
     #output {
-      margin: 16px auto 0 auto;
+      margin: 18px auto 0 auto;
       max-width: 440px;
       text-align: left;
     }
@@ -155,28 +141,28 @@
       background: #fff;
       border-radius: 14px;
       box-shadow: 0 2px 8px #0001;
-      margin: 24px auto 16px auto;
-      padding: 22px 19px 17px 19px;
+      margin: 28px auto 24px auto;
+      padding: 22px 25px 20px 25px;
       text-align: left;
       min-width: 0;
     }
     .result-block h2 {
-      font-size: 1.11em;
-      font-weight: 700;
-      margin: 0 0 9px 0;
-      letter-spacing: 0.4px;
-      color: #222;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.5px;
+      color: #111;
       line-height: 1.3;
     }
     .result-block ul {
-      margin: 0 0 9px 0;
+      margin: 0 0 11px 0;
       padding-left: 1.2em;
-      font-size: 1.01em;
-      line-height: 1.56;
+      font-size: 1.00em;
+      line-height: 1.65;
     }
     .result-summary {
-      margin: 13px 0 0 0;
-      padding: 12px 12px 10px 14px;
+      margin: 14px 0 0 0;
+      padding: 12px 14px 10px 14px;
       background: #faf8f0;
       border-radius: 10px;
       border: 1.5px solid #e9b254;
@@ -185,110 +171,76 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 1em;
-      min-width: 0;
-      flex-wrap: wrap;
     }
     .result-sum-txt {
       text-align: left;
     }
     .result-label {
-      color: #444;
-      font-size: 0.98em;
+      color: #333;
+      font-size: 1em;
       font-weight: 400;
       margin: 0 0 2px 0;
     }
     .result-cost {
-      font-size: 1.25em;
-      font-weight: 700;
+      font-size: 1.45em;
+      font-weight: 600;
       color: #1b1b1b;
       letter-spacing: 0.5px;
       margin-bottom: 2px;
     }
     .summary-note {
-      font-size: 1em;
-      color: #286fcb;
-      font-weight: 700;
-      text-align: right;
-      margin-left: 1.5em;
-    }
-    .summary-percent {
-      font-size: 1.5em;
-      color: #3d5ce7;
-      font-weight: 900;
-      margin-left: 6px;
-      margin-top: 6px;
-      vertical-align: middle;
-    }
-    .invite-block {
-      margin: 26px auto 0 auto;
-      max-width: 500px;
-      text-align: center;
-    }
-    .invite-inner {
-      background: #f8fcf1;
-      border-radius: 10px;
-      border: 1.5px solid #8fd24c;
-      padding: 16px 10px;
-      font-size: 1.11em;
-      color: #2c4c25;
+      font-size: 1.02em;
+      color: #1976d2;
       font-weight: 500;
-      line-height: 1.7;
-    }
-    .invite-inner a {
-      color: #5529bb;
-      font-weight: 700;
-      text-decoration: underline;
-      word-break: break-all;
+      text-align: right;
+      margin-left: 1.2em;
     }
     .footer-note {
       background: #fff;
-      margin: 36px auto 0 auto;
-      max-width: 450px;
-      border-radius: 12px;
+      margin: 35px auto 0 auto;
+      max-width: 440px;
+      border-radius: 13px;
       box-shadow: 0 3px 18px #0001;
-      padding: 15px 12px 14px 16px;
+      padding: 14px 18px 14px 22px;
       color: #444;
-      font-size: 0.97em;
+      font-size: 0.99em;
       text-align: left;
       line-height: 1.7;
     }
-    @media (max-width: 600px) {
-      .main { padding: 8px 0 18px 0;}
-      .notice-block, .info-block, .result-block, .footer-note { max-width:96vw; }
-      .input-card { padding: 13px 3vw 11px 3vw;}
-      .result-block { padding: 13px 2vw 11px 2vw; }
-      .footer-note { padding: 10px 3vw 9px 3vw;}
+    @media (max-width: 540px) {
+      .main { padding: 8px 0 28px 0;}
+      .info-block { max-width:97vw; }
+      .input-card { padding: 16px 2vw 13px 2vw;}
+      .result-block { padding: 14px 2vw 13px 2vw; }
+      .footer-note { padding: 11px 6px 11px 8px;}
+      .subtitle {padding:12px 7vw 12px 7vw;}
     }
   </style>
 </head>
 <body>
   <div class="main">
-    <div class="h1-wrap">
-      <div class="main-title">HafH Taiwan 2025</div>
-      <div class="main-title2">首月 3 折活動計算機</div>
-    </div>
-    <div class="notice-block">
+    <h1>HafH Taiwan 2025<br>首月 3 折活動計算機</h1>
+    <div class="subtitle">
       新會員預設使用邀請碼加入，即帳戶有 300 Ⓗ，所有計算以此為前提。<br>
       請輸入與官方網站相同條件的金額（如日期、人數、取消規則），且皆為新台幣。<br>
-      工具為用戶自製版，僅供參考。
+      此工具為用戶自製版，僅供參考使用。
     </div>
     <div class="info-block">
       <div class="info-section">
-        <div class="info-title">新手包</div>
+        <div class="info-title"><b>新手包</b></div>
         <div class="info-sub">（限新會員首次註冊，各組限購 1 次）</div>
         <div class="info-table">
-          100 Ⓗ　NT$720 <br>
-          300 Ⓗ　NT$2,040 <br>
+          100 Ⓗ　NT$720<br>
+          300 Ⓗ　NT$2,040<br>
           600 Ⓗ　NT$3,840
         </div>
         <div class="info-note">新手包僅在新會員付費加入後，7/28 前可購買，各組限購一次。</div>
       </div>
       <div class="info-section" style="margin-bottom:4px;">
-        <div class="info-title" style="color:#197fb6;">指定代幣組合</div>
-        <div class="info-green">（不限次數，付費會員皆可購買）</div>
-        <div class="info-table">
-          200 Ⓗ　NT$1,440 <br>
-          <span style="font-size:0.95em;color:#47a3d1;">（可購買直到帳號上限，7/28 前隨時可購買）</span>
+        <div class="info-title"><b>指定代幣組合</b></div>
+        <div class="info-green">（不限次數，付費會員皆可購買）<br>
+        200 Ⓗ　NT$1,440<br>
+        <span style="font-size:0.95em;display:inline-block;margin-top:2px;">指定代幣組合可購買直到帳號上限，7/28 前隨時可購買。</span>
         </div>
       </div>
     </div>
@@ -307,7 +259,7 @@
     </div>
   </div>
   <script>
-    // 加購組合設定
+    // 新手包組合與指定代幣組合設定
     const starterPacks = [
       { qty: 600, price: 3840 },
       { qty: 300, price: 2040 },
@@ -322,12 +274,11 @@
       return (num * 100).toFixed(1) + "%";
     }
 
-    // 給新會員買代幣（優先新手包，其餘用指定組合）
+    // 新會員買代幣：優先新手包，其餘指定代幣組合
     function getTokenPurchasePlanForNew(diff) {
       if (diff <= 0) return [];
       let remain = diff;
       let packs = [];
-      // 依照600,300,100順序每種只買一次
       for (let i = 0; i < starterPacks.length; ++i) {
         if (remain >= starterPacks[i].qty) {
           packs.push({
@@ -339,7 +290,6 @@
           remain -= starterPacks[i].qty;
         }
       }
-      // 剩下不足100的用regular補（可多組）
       if (remain > 0) {
         let n = Math.ceil(remain / regularPack.qty);
         packs.push({
@@ -386,7 +336,8 @@
         purchaseStrA = "新會員無需加購";
       }
       let percentA = totalCostA / officialPrice;
-      let percentStrA = "與您提供的官網價格相比約為";
+      let percentStrA = "約為 <span style='font-weight:bold;font-size:1.2em;color:#1976d2;'>" + formatPercent(percentA) + "</span>";
+
       // 方案B
       let perPerson = Math.ceil(hafhHC / 2);
       let diffB = Math.max(0, perPerson - 300);
@@ -403,17 +354,18 @@
         purchaseStrB = "餘額足夠無需加購";
       }
       let percentB = totalCostB / officialPrice;
-      let percentStrB = "與您提供的官網價格相比約為";
+      let percentStrB = "約為 <span style='font-weight:bold;font-size:1.2em;color:#1976d2;'>" + formatPercent(percentB) + "</span>";
+
       // 方案C
-      let diffCOld = perPerson; // 舊會員分擔
-      let diffCNew = perPerson - 300; // 新會員分擔
+      let diffCOld = perPerson;
+      let diffCNew = perPerson - 300;
       let purchaseCOld = getTokenPurchasePlanForOld(diffCOld);
       let totalCostCOld = purchaseCOld.reduce((sum, p) => sum + p.price * p.count, 0);
       let purchaseStrCOld = purchaseCOld.length > 0 ? purchaseCOld.map(p =>
         "指定代幣組合 " + p.qty + " Ⓗ ×" + p.count + "<br><span style='font-size:0.98em;color:#444;'>" + format(p.price * p.count) + "</span>"
       ).join("<br>") : "舊會員無需加購";
       let purchaseCNew = getTokenPurchasePlanForNew(diffCNew);
-      let totalCostCNew = 439; // 新會員首月費
+      let totalCostCNew = 439;
       let purchaseStrCNew = "";
       if (purchaseCNew.length > 0) {
         purchaseStrCNew = purchaseCNew.map(p =>
@@ -426,9 +378,9 @@
       }
       let totalCostC = totalCostCOld + totalCostCNew;
       let percentC = totalCostC / officialPrice;
-      let percentStrC = "與您提供的官網價格相比約為";
+      let percentStrC = "約為 <span style='font-weight:bold;font-size:1.2em;color:#1976d2;'>" + formatPercent(percentC) + "</span>";
 
-      // 輸出
+      // 組裝
       let html = '';
       html += `
       <div class="result-block">
@@ -445,7 +397,7 @@
             <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
-          <div class="summary-note">${percentStrA}<span class="summary-percent">${formatPercent(percentA)}</span></div>
+          <div class="summary-note">${percentStrA}</div>
         </div>
       </div>
       `;
@@ -464,7 +416,7 @@
             <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
-          <div class="summary-note">${percentStrB}<span class="summary-percent">${formatPercent(percentB)}</span></div>
+          <div class="summary-note">${percentStrB}</div>
         </div>
       </div>
       `;
@@ -472,8 +424,7 @@
       <div class="result-block">
         <h2>方案 C｜舊會員邀請朋友一起住</h2>
         <ul>
-          <li>舊會員與朋友各需 ${perPerson} Ⓗ<br>
-            舊會員全額加購<br>${purchaseStrCOld}</li>
+          <li>舊會員與朋友各需 ${perPerson} Ⓗ<br>舊會員全額加購：<br>${purchaseStrCOld}</li>
           <li>新會員加購：<br>${purchaseStrCNew}</li>
           <li>朋友首次加入月費：${format(439)}</li>
         </ul>
@@ -484,17 +435,20 @@
             <div class="result-label">您輸入的官網價格：</div>
             <div class="result-cost">${format(officialPrice)}</div>
           </div>
-          <div class="summary-note">${percentStrC}<span class="summary-percent">${formatPercent(percentC)}</span></div>
+          <div class="summary-note">${percentStrC}</div>
         </div>
       </div>
       `;
       html += `
-      <div class="invite-block">
-        <div class="invite-inner">
-          💡 現在立即使用
-          <a href="https://www.hafh.com/zh-tw/invite/tw/EDXTKX?utm_source=calculator&utm_medium=yh&utm_campaign=tw70off"
-             target="_blank">我的邀請連結</a>
-          完成付費加入，享有首月 3 折與邀請禮遇 100 Ⓗ 優惠開始累積！
+      <div style="margin:30px auto 0 auto;max-width:500px;text-align:center;">
+        <div style="background:#f8fcf1;border-radius:10px;border:1.5px solid #8fd24c;padding:18px 10px;">
+          <span style="font-size:1.12em;">💡 現在立即使用
+            <a href="https://www.hafh.com/zh-tw/invite/tw/EDXTKX?utm_source=calculator&utm_medium=yh&utm_campaign=tw70off"
+              target="_blank" style="color:#178900;font-weight:700;text-decoration:underline;">
+              我的邀請連結
+            </a>
+            完成付費加入，享有首月 3 折與邀請禮遇 100 Ⓗ 優惠開始累積！
+          </span>
         </div>
       </div>
       `;
