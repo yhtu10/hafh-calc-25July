@@ -1,157 +1,153 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HafH 活動方案比價試算器</title>
+  <title>HafH 住宿比價試算器</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    input, select { width: 100%; padding: 8px; margin: 8px 0; }
-    .result { margin-top: 24px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; }
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      line-height: 1.8;
+      background-color: #fff;
+      color: #333;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    label, select, input {
+      display: block;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+    .note, .plan, .reminder {
+      background: #f9f9f9;
+      border-left: 4px solid #ccc;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    .plan {
+      border-left-color: #2196F3;
+    }
+    .highlight {
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    .small-note {
+      font-size: 14px;
+      color: #777;
+    }
   </style>
 </head>
 <body>
-  <h2>HafH 住宿比價試算器</h2>
-  <p>請先輸入下列資料：</p>
+  <h1>HafH 住宿比價試算器</h1>
 
-  <label>幾人入住：</label>
-  <select id="people">
-    <option value="1">1 人</option>
-    <option value="2">2 人</option>
-  </select>
-
-  <label>是否為新會員：</label>
-  <select id="isNew">
-    <option value="yes">是</option>
-    <option value="no">否</option>
-  </select>
-
-  <label>是否使用邀請碼：</label>
-  <select id="hasCode">
-    <option value="yes">是</option>
-    <option value="no">否</option>
-  </select>
-
-  <label>官網價格（請輸入台幣或日幣整數）：</label>
-  <input type="number" id="officialPrice" placeholder="例如：39425">
-
-  <label>需要 Ⓗ 數量：</label>
-  <input type="number" id="hafhCoins" placeholder="例如：960">
-
-  <button onclick="calculate()">立即試算</button>
-
-  
-  <div class="result" style="margin-top:24px; padding:16px; background:#f0f0f0;">
-    <h4>📌 HafH 可購買代幣方案說明</h4>
-    <p>🎁 <strong>新手包組合</strong>（僅限首次註冊購買，每組限購一次）：<br>
-      ・100 Ⓗ → NT$720<br>
-      ・300 Ⓗ → NT$2,040<br>
-      ・600 Ⓗ → NT$3,840</p>
-    <p>💼 <strong>指定代幣組合</strong>（限現有付費會員）：<br>
-      ・200 Ⓗ（九折）→ NT$1,440<br>
-      ※ 可重複購買</p>
+  <div class="note">
+    🔔 <strong>提醒：</strong><br>
+    此計算器是以「<strong>新會員有使用邀請碼、帳戶初始為 300 Ⓗ</strong>」為前提進行估算。<br>
+    請確認您所查詢的官網價格，是與 HafH 預約條件一致的日期、房型與人數，並以新台幣標示。
   </div>
 
-  <div class="result" id="resultBox" style="display:none"></div>
+  <div class="section">
+    <label for="officialPrice">官網價格（請輸入新台幣）：</label>
+    <input type="number" id="officialPrice" placeholder="例如：4400">
+
+    <label for="coinAmount">需要 Ⓗ 數量：</label>
+    <input type="number" id="coinAmount" placeholder="例如：430">
+
+    <button onclick="calculate()">立即試算</button>
+  </div>
+
+  <div class="note">
+    🧾 <strong>HafH 可購買代幣方案說明：</strong><br>
+    🎁 新手包組合（限首次註冊購買，每組限購一次）：<br>
+    ・100 Ⓗ ＝ NT$720<br>
+    ・300 Ⓗ ＝ NT$2,040<br>
+    ・600 Ⓗ ＝ NT$3,840<br>
+    🧳 指定代幣組合（限現有付費會員）：<br>
+    ・200 Ⓗ（九折）＝ NT$1,440（可重複購買）
+  </div>
+
+  <div id="results"></div>
+
+  <div class="reminder">
+    🧡 <strong>溫馨提醒：</strong>
+    <ol>
+      <li>此試算頁面為粗略估算，為求警慎請自行依照邏輯再次試算一遍。</li>
+      <li>付費加入當天為結算日，且為第一次扣款，到第三次扣款的時候，就會升級 Silver VIP，享有每筆訂房 95 折。</li>
+      <li>有預約的狀況下無法變更為休眠會籍，若預約日期距離現在還會經過一次結算日，則會有扣款並同時有 200 Ⓗ 入帳。</li>
+    </ol>
+  </div>
 
   <script>
     function calculate() {
-      const people = parseInt(document.getElementById('people').value);
-      const isNew = document.getElementById('isNew').value === 'yes';
-      const hasCode = document.getElementById('hasCode').value === 'yes';
-      const officialPrice = parseInt(document.getElementById('officialPrice').value);
-      const hafhCoins = parseInt(document.getElementById('hafhCoins').value);
-      const coinToNT = 7.25;
-      let result = '';
+      const official = Number(document.getElementById('officialPrice').value);
+      const need = Number(document.getElementById('coinAmount').value);
+      let results = document.getElementById('results');
+      let output = '';
 
-      if (isNaN(officialPrice) || isNaN(hafhCoins)) {
-        alert('請完整填寫所有欄位');
-        return;
-      }
+      // 方案 A
+      let deficitA = need - 300;
+      let aCoinsCost = 0;
+      if (deficitA > 0) aCoinsCost = 1440;
+      let totalA = 439 + aCoinsCost;
+      let percentA = Math.round((totalA / official) * 100);
+      output += `
+      <div class="plan">
+        <h3>方案 A｜新會員單人入住</h3>
+        <ul>
+          <li>帳號開局為 300 Ⓗ，實際需要 ${need} Ⓗ，差額 ${deficitA > 0 ? deficitA : 0} Ⓗ</li>
+          ${deficitA > 0 ? '<li>可購買 200 Ⓗ 指定代幣組合 NT$1,440</li>' : '<li>帳戶已足夠，不需購買代幣</li>'}
+          <li>首月會費 NT$439</li>
+        </ul>
+        <strong>總成本：約 NT$${totalA}</strong><br>
+        <span class="highlight">相對官網節省：約 ${100 - percentA}% 價格</span>
+      </div>`;
 
-      let coinNeededA = hafhCoins;
-      let costA = 439;
-      if (coinNeededA > 300) {
-        let extraCoins = coinNeededA - 300;
-        if (extraCoins <= 100) costA += 720;
-        else if (extraCoins <= 300) costA += 2040;
-        else if (extraCoins <= 600) costA += 3840;
-        else costA += 3840 + 1440;
-      }
+      // 方案 B
+      let perPerson = Math.ceil(need / 2);
+      let bTotal = 439 * 2;
+      let percentB = Math.round((bTotal / official) * 100);
+      output += `
+      <div class="plan">
+        <h3>方案 B｜新會員雙人入住分攤</h3>
+        <ul>
+          <li>房價 ${need} Ⓗ 拆半後每人需 ${perPerson} Ⓗ</li>
+          <li>兩人皆為新會員，帳號內皆有 300 Ⓗ，足以支付所需 Ⓗ 數</li>
+          <li>每人會費 NT$439</li>
+        </ul>
+        <strong>總成本：約 NT$${bTotal}</strong><br>
+        <span class="highlight">相對官網節省：約 ${100 - percentB}% 價格</span>
+      </div>`;
 
-      let halfCoins = Math.ceil(hafhCoins / 2);
-      let costB = 439 + 1440;
-      let costB_total = costB * 2;
+      // 方案 C
+      let cTotalCoinsCost = 2880;
+      let cFriendFee = 439;
+      let cTotal = cTotalCoinsCost + cFriendFee;
+      let percentC = Math.round((cTotal / official) * 100);
+      output += `
+      <div class="plan">
+        <h3>方案 C｜老會員邀請朋友一起住</h3>
+        <ul>
+          <li>朋友需 215 Ⓗ，你也需 215 Ⓗ</li>
+          <li>假設你帳號無餘額，購買兩組 200 Ⓗ 指定組合（NT$1,440 × 2）</li>
+          <li>朋友首次付費成為會員：NT$439</li>
+        </ul>
+        <strong>總成本：約 NT$${cTotal}</strong><br>
+        <span class="highlight">相對官網節省：約 ${100 - percentC}% 價格</span>
+      </div>`;
 
-      let costC_friend = 439 + 1440;
-      let costC_you = Math.ceil(hafhCoins / 2 * coinToNT);
-      let inviteBonus = hasCode ? 200 * coinToNT : 0;
-      let costC_total = costC_you + costC_friend - inviteBonus;
-
-      result += `<div class="result" style="padding:12px; background:#f0f0f0;"><strong>📌 HafH 可購買代幣方案說明</strong><br>🎁 新手包組合：100 Ⓗ＝NT$720、300 Ⓗ＝NT$2,040、600 Ⓗ＝NT$3,840<br>💼 指定代幣組合：200 Ⓗ（九折）＝NT$1,440</div>`;
-result += `<h3>方案 A｜新會員單人入住</h3>`;
-      result += `💡 如果你是新會員，只想自己訂房使用 HafH<br>`;
-      result += `- Ⓗ 房價為 ${hafhCoins} Ⓗ<br>`;
-      result += `- 使用邀請碼註冊，帳號中會有 300 Ⓗ（首月付費會員）<br>`;
-      result += `- 還需要補 ${hafhCoins - 300} Ⓗ 才能入住<br>`;
-      result += `- 你可以直接購買 Ⓗ200 指定代幣組合（NT$1,440）來補足<br>`;
-      result += `- 實際會用掉 ${hafhCoins - 300} Ⓗ，剩下 ${(200 - (hafhCoins - 300))} Ⓗ 可留未來使用<br>`;
-      result += `- 首月會費 NT$439 + 指定代幣組合 NT$1,440 = <strong>NT$1,879</strong><br>`;
-      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 1879 / officialPrice)}%</strong> 價格<hr>`;
-      result += `總成本：約 NT$${Math.round(costA)}<br>`;
-      result += `相對官網節省：約 ${Math.round(100 - costA / officialPrice * 100)}%<hr>`;
-
-      result += `<h3>方案 B｜新會員雙人入住分攤</h3>`;
-      result += `💡 如果你和朋友都是新會員，可以一起訂房並使用「分攤預訂」功能<br>`;
-      result += `- Ⓗ 房價拆半所以每人需 ${halfCoins} Ⓗ<br>`;
-      result += `- 使用邀請碼註冊後帳號會有 300 Ⓗ<br>`;
-      result += `- 帳號內 300 Ⓗ 足夠支付，不需要補買新手包或指定代幣<br>`;
-      result += `- 成本僅為首月會費 NT$439 × 2<br>`;
-      result += `- <strong>總成本：NT$878</strong><br>`;
-      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 878 / officialPrice)}%</strong> 價格<hr>`;
-      result += `💡 適合兩位新會員一起訂房並使用分攤功能<br>`;
-      result += `- 每人需 ${halfCoins} Ⓗ，註冊送 300 Ⓗ → 每人補 200 Ⓗ<br>`;
-      result += `- 補買 200 Ⓗ 指定代幣組合：NT$1440（每人）<br>`;
-      result += `- 首月會費：NT$439（每人）<br>`;
-      result += `✅ 兩人總成本：約 NT$${Math.round(costB_total)}<br>`;
-      result += `📉 節省：約 ${Math.round(100 - costB_total / officialPrice * 100)}% 相較官網 NT$${officialPrice}<hr>`;
-
-      result += `<h3>方案 C｜老會員邀請朋友一起住</h3>`;
-      result += `💡 如果你已經是 HafH 的付費會員，可以邀請朋友一起訂房並使用「分攤預訂」功能<br>`;
-      result += `- Ⓗ 房價為 ${hafhCoins} Ⓗ，分攤後你與朋友各需 ${halfCoins} Ⓗ<br>`;
-      result += `- 假設你帳號餘額為 0，需補 ${halfCoins} Ⓗ<br>`;
-      result += `- 可購買兩組 Ⓗ200 指定代幣組合（NT$1,440 × 2 = NT$2,880）<br>`;
-      result += `- 朋友註冊後帳號內會有 300 Ⓗ，足夠支付，不需額外購買<br>`;
-      result += `- 朋友僅需支付首月會費 NT$439<br>`;
-      result += `- 你可獲得邀請回饋 200 Ⓗ（價值約 NT$1,450，可留作下次使用）<br>`;
-      result += `- <strong>總成本：約 NT$3,319</strong>（你付 NT$2,880，朋友 NT$439）<br>`;
-      result += `📉 相較官網 NT$${officialPrice}，為 <strong>${Math.round(100 * 3319 / officialPrice)}%</strong> 價格<hr>`;
-      result += `總成本：約 NT$${Math.round(costC_total)}<br>`;
-      result += `相對官網節省：約 ${Math.round(100 - costC_total / officialPrice * 100)}%<hr>`;
-
-      result += `<p>👉 建議：根據目前條件，「方案 ${bestOption(costA, costB_total, costC_total)}」最划算！</p>`;
-      result += `<p>📌 馬上使用 HafH 註冊：<a href="https://www.hafh.com/invite?code=TW30RC" target="_blank">點我使用邀請碼</a></p>`;
-
-      document.getElementById('resultBox').innerHTML = result;
-      document.getElementById('resultBox').style.display = 'block';
-
-result += `<div class="result" style="padding:16px; background:#fff8e1; border:1px solid #ffe082; margin-top:24px;">
-  <h4>📌 溫馨提醒</h4>
-  <ol>
-    <li>此試算頁面為粗略估算，為求謹慎請自行依照邏輯再次試算一遍。</li>
-    <li>付費加入當天為結算日，且為第一次扣款日；到第三次扣款時會升級為 Silver VIP，可享每筆訂房 95 折。</li>
-    <li>有預約的狀況下無法變更為休眠會籍，若預約日尚未到且期間會經過結算日，系統會照常扣款並發放 200 Ⓗ。</li>
-  </ol>
-</div>`;
-
-    }
-
-    function bestOption(a, b, c) {
-      let min = Math.min(a, b, c);
-      if (min === a) return 'A';
-      if (min === b) return 'B';
-      return 'C';
+      results.innerHTML = output;
     }
   </script>
 </body>
