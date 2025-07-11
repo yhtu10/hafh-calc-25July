@@ -3,38 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <title>HafH 2025 首月 3 折活動計算機</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body { height: 100%; margin: 0; }
-    body { font-family: "Noto Sans TC", sans-serif; min-height: 100vh; background: #f9f9f9; }
-    .center-wrap {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      min-height: 100vh; width: 100vw;
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background: #f9f9f9;
+      min-height: 100vh;
+      margin: 0;
     }
-    h1 { color: #333; text-align: center; margin-bottom: 18px; }
-    .intro { margin: 18px 0 22px 0; color: #444; text-align: center; }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+    }
+    h1 {
+      color: #222;
+      margin-bottom: 16px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-align: center;
+    }
+    .intro {
+      color: #444; text-align: center; margin-bottom: 20px; line-height: 1.7;
+      font-size: 1.07em;
+    }
+    .input-group {
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 18px; background: #fff;
+      padding: 28px 32px 18px 32px; border-radius: 14px;
+      box-shadow: 0 2px 16px 0 #eee;
+      min-width: 360px;
+    }
+    label {
+      margin-top: 8px; margin-bottom: 2px; font-weight: 600;
+    }
+    input {
+      margin-bottom: 12px; padding: 7px 10px;
+      width: 210px; border-radius: 5px; border: 1px solid #bdbdbd;
+      font-size: 1.06em; background: #f5f7fa;
+      transition: border-color .2s;
+    }
+    input:focus { border: 1.6px solid #1a73e8; outline: none; }
+    button {
+      padding: 12px 32px; background: #3caf48;
+      color: white; border: none; border-radius: 5px;
+      cursor: pointer; font-size: 17px; margin-top: 2px;
+      transition: background .18s;
+      font-weight: 500;
+    }
+    button:hover { background: #318837;}
     .pack-info {
-      background: #fff; padding: 14px 24px; border-radius: 6px; margin: 0 0 24px 0;
-      line-height: 1.65; font-size: 15px; max-width: 520px; text-align: left;
+      background: #fff; padding: 18px 28px; border-radius: 10px;
+      margin: 18px 0 24px 0; line-height: 1.7; font-size: 15.5px;
+      width: 100%; max-width: 580px; text-align: left;
+      box-shadow: 0 2px 12px 0 #f1f3f6;
+      margin-bottom: 32px;
     }
-    .input-group { display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
-    label { margin-top: 10px; margin-bottom: 2px; }
-    input { margin-bottom: 8px; padding: 5px; width: 180px; border-radius: 4px; border: 1px solid #bbb; }
-    button { padding: 10px 22px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 8px;}
-    .result { margin-top: 32px; background: #fff; padding: 22px 32px; border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.10); max-width: 520px; text-align: left;
-      display: flex; flex-direction: column; align-items: flex-start;
+    .pack-info-table {
+      display: flex; gap: 36px; flex-wrap: wrap; margin-top: 10px; align-items: flex-start;
     }
-    .result h2 { margin: 0 0 12px 0; font-size: 1.15em;}
-    .cost { color: #b71c1c; font-weight: bold; margin-top: 7px;}
-    .official { color: #444; font-size: 0.97em; margin-top: 2px;}
-    .compare { color: #1565c0; font-weight: bold; margin-top: 4px;}
-    ul { margin: 0 0 12px 0; padding-left: 24px; }
+    .pack-info-col {
+      flex:1 1 220px; min-width:180px;
+    }
+    .pack-info-col table {
+      border-collapse: collapse; width: 100%; margin-top: 3px;
+    }
+    .pack-info-col td {
+      padding: 4px 10px 4px 0; font-size: 1.08em;
+    }
+    .pack-info-col tr td:last-child {
+      text-align: right; color: #212121; font-weight: 500;
+    }
+    .pack-info-col .note {
+      font-size:0.95em; color:#a67c13; margin-top:2px; margin-bottom:5px;
+    }
+    .pack-info-col .note2 { color:#18833b;}
+    .pack-info-col .title1 { font-weight:700; margin-bottom:4px; color:#ed921b;}
+    .pack-info-col .title2 { font-weight:700; margin-bottom:4px; color:#18833b;}
+    .result-list {
+      width: 100%; display: flex; flex-direction: column; align-items: center;
+      gap: 24px; margin: 0;
+    }
+    .result {
+      background: #fff;
+      padding: 32px 38px;
+      border-radius: 14px;
+      box-shadow: 0 2px 14px 0 #ebeff2;
+      width: 100%; max-width: 560px;
+      margin: 0 auto 0 auto;
+      text-align: left;
+      margin-bottom: 0;
+    }
+    .result h2 { margin: 0 0 15px 0; font-size: 1.23em; font-weight: 700; letter-spacing: 0.5px;}
+    .result ul { margin: 0 0 12px 0; padding-left: 21px; line-height: 1.85;}
     .combo-list { margin: 0 0 0 0; padding: 0; list-style: none; }
-    .combo-list li { margin: 0; padding: 0; line-height: 1.8;}
-    .footer { font-size: 0.97em; color: #666; margin-top: 38px; line-height: 1.7; max-width: 520px; text-align: left;}
-    @media (max-width: 600px) {
-      .pack-info, .result, .footer { max-width: 97vw; padding: 14px 7vw;}
-      input { width: 98vw; }
+    .combo-list li { margin: 0 0 0 0; padding: 0 0 0 0; line-height: 1.7; }
+    .cost { color: #b71c1c; font-weight: bold; margin-top: 10px; font-size: 1.11em;}
+    .official { color: #444; font-size: 0.98em; margin-top: 2px;}
+    .compare { color: #1565c0; font-weight: bold; margin-top: 7px;}
+    .footer {
+      font-size: 0.99em; color: #666; margin-top: 40px; line-height: 1.8;
+      max-width: 600px; text-align: left; margin-left: auto; margin-right: auto;
+      background: #f7f7fb; border-radius: 10px; padding: 22px 32px;
+      box-shadow: 0 1px 6px 0 #e9ebf0;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 8px 0;}
+      .input-group, .result, .pack-info, .footer {
+        max-width: 97vw; padding: 18px 5vw;
+        min-width: unset;
+      }
+      .result { padding: 22px 6vw;}
+      .pack-info { padding: 12px 4vw; }
+    }
+    @media (max-width: 440px) {
+      .result, .pack-info, .footer { padding: 10px 2vw;}
     }
   </style>
   <script>
@@ -130,7 +217,7 @@
       `;
 
       // 方案C
-      let hcEachC = hcEachB; // 舊會員與朋友各需
+      let hcEachC = hcEachB;
       let oldNeed = hcEachC;
       let oldBuy = Math.ceil(oldNeed / 200);
       let oldCostC = oldBuy * 1440;
@@ -153,16 +240,42 @@
         </div>
       `;
 
-      // 新手包說明
-      let packInfo = `<div class="pack-info" style="text-align:left;">
-        <strong>HafH 新手包與指定代幣組合價格說明：</strong><br>
-        新手包：100 Ⓗ＝NT$720、300 Ⓗ＝NT$2,040、600 Ⓗ＝NT$3,840（各限購一次，僅限新會員首次註冊購買）<br>
-        指定代幣組合：200 Ⓗ＝NT$1,440（不限次數，僅限付費會員購買）
+      // 新手包說明（新版）
+      let packInfo = `<div class="pack-info">
+        <strong style="font-size:1.12em; color:#2152d9; letter-spacing:0.5px;">
+          HafH 代幣購買說明
+        </strong>
+        <div class="pack-info-table">
+          <div class="pack-info-col">
+            <div class="title1">
+              🎁 新手包
+              <span style="font-size:0.97em; font-weight:400;">（限新會員首次註冊，各組限購 1 次）</span>
+            </div>
+            <table>
+              <tr><td>100 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$720</td></tr>
+              <tr><td>300 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$2,040</td></tr>
+              <tr><td>600 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$3,840</td></tr>
+            </table>
+            <div class="note">註：新手包僅在新會員註冊時可購買，各組限購一次。</div>
+          </div>
+          <div class="pack-info-col">
+            <div class="title2">
+              🔄 指定代幣組合
+              <span style="font-size:0.97em; font-weight:400;">（不限次數，付費會員皆可購買）</span>
+            </div>
+            <table>
+              <tr><td>200 <span style="font-family:sans-serif;">Ⓗ</span></td><td>NT$1,440</td></tr>
+            </table>
+            <div class="note note2">註：指定代幣組合購買無上限，會員期間隨時可購買。</div>
+          </div>
+        </div>
       </div>`;
 
       // 輸出
-      output.innerHTML = packInfo + htmlA + htmlB + htmlC +
-        `<div class="footer">
+      output.innerHTML =
+        packInfo +
+        `<div class="result-list">${htmlA + htmlB + htmlC}</div>
+        <div class="footer">
         <strong>溫馨提醒：</strong><br>
         1. 此試算頁面為粗略估算，為求謹慎請自行依照邏輯再次試算一遍。<br>
         2. 付費加入當天為結算日，且為第一次扣款。到第三次扣款時帳號會升級為 Silver VIP，享有每筆訂房 95 折。<br>
@@ -172,7 +285,7 @@
   </script>
 </head>
 <body>
-  <div class="center-wrap">
+  <div class="container">
     <h1>HafH 2025 首月 3 折活動計算機</h1>
     <div class="intro">
       <b>提醒：</b>新會員預設帳戶有 300 Ⓗ，所有計算以此為前提。請填寫符合相同條件（日期、人數、取消規則）且為新台幣的金額。
