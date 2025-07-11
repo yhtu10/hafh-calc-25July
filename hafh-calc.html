@@ -269,24 +269,55 @@
 
     // 動態組合找最小金額（回傳：[{qty, price, type, count}]）
     function getTokenPurchasePlan(diff) {
-      let remain = diff;
-      let plan = [];
-      for (let i=0; i<starterPacks.length; ++i) {
-        let used = 0;
-        let sp = starterPacks[i];
-        if (remain >= sp.qty) {
-          used = Math.min(1, Math.floor(remain / sp.qty));
-          remain -= sp.qty * used;
-          if (used > 0) plan.push({type:'starter', qty:sp.qty, price:sp.price, count:used});
+  // 如果不需加購，直接回傳空
+  if (diff <= 0) return [];
+  // 可用的方案（每種新手包最多 1 組，指定代幣無上限）
+  const packs = [
+    { type: 'starter', qty: 100, price: 720, max: 1 },
+    { type: 'starter', qty: 300, price: 2040, max: 1 },
+    { type: 'starter', qty: 600, price: 3840, max: 1 },
+    { type: 'regular', qty: 200, price: 1440, max: 99 },
+  ];
+  // DP: cost[i] = 花費 i 顆代幣最少要多少元
+  let maxToken = diff + 600; // 加600給彈性
+  let cost = Array(maxToken+1).fill(Infinity);
+  let path = Array(maxToken+1).fill(null);
+  cost[0] = 0;
+  path[0] = [];
+
+  // 新手包部分用 0/1 背包法
+  for (let s100 = 0; s100 <= 1; ++s100)
+  for (let s300 = 0; s300 <= 1; ++s300)
+  for (let s600 = 0; s600 <= 1; ++s600) {
+    let tokens = 100 * s100 + 300 * s300 + 600 * s600;
+    let amount = 720 * s100 + 2040 * s300 + 3840 * s600;
+    // 補上任意組 regular
+    for (let r = 0; r <= Math.ceil(maxToken/200); ++r) {
+      let totalTokens = tokens + 200 * r;
+      let totalAmount = amount + 1440 * r;
+      if (totalTokens >= diff && totalTokens <= maxToken) {
+        if (totalAmount < cost[totalTokens]) {
+          cost[totalTokens] = totalAmount;
+          path[totalTokens] = [
+            { type: 'starter', qty: 100, price: 720, count: s100 },
+            { type: 'starter', qty: 300, price: 2040, count: s300 },
+            { type: 'starter', qty: 600, price: 3840, count: s600 },
+            { type: 'regular', qty: 200, price: 1440, count: r }
+          ].filter(p => p.count > 0);
         }
       }
-      if (remain > 0) {
-        let need = Math.ceil(remain / regularPack.qty);
-        plan.push({type:'regular', qty:regularPack.qty, price:regularPack.price, count:need});
-        remain = 0;
-      }
-      return plan;
     }
+  }
+  // 找到能cover diff的最小花費組合
+  let min = Infinity, minPlan = null;
+  for (let t = diff; t <= maxToken; ++t) {
+    if (cost[t] < min) {
+      min = cost[t];
+      minPlan = path[t];
+    }
+  }
+  return minPlan || [];
+}
 
     function showResult() {
       const hafhHC = parseInt(document.getElementById('hafhHC').value, 10);
